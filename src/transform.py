@@ -25,13 +25,21 @@ def loading_file(data : list) -> pd.DataFrame:
     Returns:
         pd.DataFrame: A DataFrame containing the concatenated data from all files
     """
-    data_file = []
+    all_data_file = []
     for file in data: 
         if str(file).endswith('.xlsx'):
             print(f'load file {file}')
-            data_file.append(pd.read_excel(file))
-    all_data_file = pd.concat(data_file)
-    return all_data_file
+            data_file = pd.read_excel(file)
+            data_file['source_fichier'] = Path(file).name
+            all_data_file.append(data_file)
+    if all_data_file: 
+        return pd.concat(all_data_file)
+    else:
+        print("No Excel files found in the specified directory.")
+        return pd.DataFrame()
+
+
+
 
 def test():
     """Function testing
