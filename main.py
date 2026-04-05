@@ -1,9 +1,8 @@
-from src.transform import get_paths, loading_file, test
+from src.transform import initialisation
 
 
 def main():
-    # loading and transforming data from Excel file in the data directory
-    test()
+    initialisation()
 
 if __name__ == "__main__":
     main()

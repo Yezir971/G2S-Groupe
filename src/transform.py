@@ -67,20 +67,32 @@ def convert_amount(data : pd.DataFrame, columns: list)-> pd.DataFrame:
     """
     # check if the columns is in the data
     # identify all columns 
-    missing_collumns = [ element for element in columns if element not in data.columns]
+    missing_collumns = [ element for element in columns if element not in data.columns ]
     if missing_collumns : 
-        raise KeyError(f"Les colonnes suivantes n'existe pas, ou sont mal orthographié : {' ,'.join(missing_collumns)}")
+        raise KeyError(f"The following columns are missing or misspelled: {' ,'.join(missing_collumns)}")
     # todo : convert : Base salaire - Taux salire - Montant salarial - Base patronal - Taux patronal - Montant patronal - Montant Total   
-    return data.astype({ element : "float64"  for element in columns })
+    return data.astype({ element : "float64" for element in columns })
 
 
+def export_to_csv(data: pd.DataFrame, file_name: str) -> None:
+    """Export DataFrame to a CSV file
 
-def test():
-    """Function testing
+    Args:
+        data (pd.DataFrame): DataFrame to be exported
+        file_name (str): Name of the output CSV file
     """
-    print("This is a test function")
+    data.to_csv(file_name, index=False)
+
+    
+def initialisation():
+    """Function for data preparation
+    """
+    # loading all files in the data directory
     data = loading_file(get_paths("./data"))
+    # convert amount to float
     data_convert = convert_amount(data, ['Effectif', 'Bulletin paie', 'Base salariale','Taux salarial', 'Montant salarial', 'Base patronale', 'Taux patronal','Montant patronal', 'Montant total'])
-    print(data_convert["Effectif"])
-    result = is_matricule_null(data)
-    print(result)
+    # check if the Matricule column contains null values
+    if is_matricule_null(data) :
+        raise ValueError("Null values found in the Matricule column.")
+    # convert the data to csv file
+    export_to_csv(data_convert, "JDP_Consolide.csv")
