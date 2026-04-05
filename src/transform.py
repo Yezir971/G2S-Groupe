@@ -33,10 +33,24 @@ def loading_file(data : list) -> pd.DataFrame:
             data_file['source_fichier'] = Path(file).name
             all_data_file.append(data_file)
     if all_data_file: 
+        print(all_data_file)
         return pd.concat(all_data_file)
     else:
         print("No Excel files found in the specified directory.")
         return pd.DataFrame()
+
+def is_matricule_null(data: pd.DataFrame)-> bool:
+    """_summary_
+
+    Args:
+        data (pd.DataFrame): dataframe to check for null values in the Matricule column
+
+    Returns:
+        bool: True or false if the Matricule is null
+    """
+    if data['Matricule'].isna().any():
+        return True
+    return False
 
 
 
@@ -45,4 +59,7 @@ def test():
     """Function testing
     """
     print("This is a test function")
-    loading_file(get_paths("./data"))
+    data = loading_file(get_paths("./data"))
+    print(data)
+    result = is_matricule_null(data)
+    print(result)
