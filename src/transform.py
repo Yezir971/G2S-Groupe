@@ -36,7 +36,6 @@ def loading_file(data : list) -> pd.DataFrame:
             data_file['date_import'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             all_data_file.append(data_file)
     if all_data_file: 
-        print(all_data_file)
         return pd.concat(all_data_file)
     else:
         print("No Excel files found in the specified directory.")
