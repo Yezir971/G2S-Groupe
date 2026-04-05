@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
+from datetime import datetime
 
 def get_paths(folder_path: str) -> list:
     """Get path for all files in data
@@ -31,6 +32,8 @@ def loading_file(data : list) -> pd.DataFrame:
             print(f'load file {file}')
             data_file = pd.read_excel(file)
             data_file['source_fichier'] = Path(file).name
+            data_file['nom_candidat'] = "Ahmedaly"
+            data_file['date_import'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             all_data_file.append(data_file)
     if all_data_file: 
         print(all_data_file)
