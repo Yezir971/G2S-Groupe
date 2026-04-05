@@ -152,6 +152,7 @@ Placer les fichiers Excel dans `data/`, puis exécuter `python main.py` :
 *Print-screen du client SQL montrant les données insérées dans `jdp_consolides`.*
 
 ### Dashboard Tableau
+![Dashboard Tableau](screen/login_dashboard.png)
 ![Dashboard Tableau](screen/dashboard-1.png)
 ![Dashboard Tableau](screen/dashboard-2.png)
 
