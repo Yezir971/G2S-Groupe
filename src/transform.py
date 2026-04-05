@@ -52,6 +52,26 @@ def is_matricule_null(data: pd.DataFrame)-> bool:
         return True
     return False
 
+def convert_amount(data : pd.DataFrame, columns: list)-> pd.DataFrame:
+    """Convert in float the amount
+
+    Args:
+        data (pd.DataFrame): DataFrame containing the data to be converted
+        columns (list): List of column names to convert to float
+
+    Raises:
+        KeyError: If any of the specified columns are not found in the DataFrame
+
+    Returns:
+        pd.DataFrame: DataFrame with specified columns converted to float
+    """
+    # check if the columns is in the data
+    # identify all columns 
+    missing_collumns = [ element for element in columns if element not in data.columns]
+    if missing_collumns : 
+        raise KeyError(f"Les colonnes suivantes n'existe pas, ou sont mal orthographié : {' ,'.join(missing_collumns)}")
+    # todo : convert : Base salaire - Taux salire - Montant salarial - Base patronal - Taux patronal - Montant patronal - Montant Total   
+    return data.astype({ element : "float64"  for element in columns })
 
 
 
@@ -60,6 +80,7 @@ def test():
     """
     print("This is a test function")
     data = loading_file(get_paths("./data"))
-    print(data)
+    data_convert = convert_amount(data, ['Effectif', 'Bulletin paie', 'Base salariale','Taux salarial', 'Montant salarial', 'Base patronale', 'Taux patronal','Montant patronal', 'Montant total'])
+    print(data_convert["Effectif"])
     result = is_matricule_null(data)
     print(result)
